@@ -1,33 +1,17 @@
 ﻿using System.ComponentModel.Design;
-
-Console.WriteLine("Please type your name");
-var name = Console.ReadLine();
 var date = DateTime.UtcNow;
+string name = GetName();
 
-Menu(name, date);
-
-void MultiplicationGame(string messaage)
+Menu(name);
+string GetName()
 {
-    Console.WriteLine(messaage);
-}
-
-void DivisionGame(string message)
-{
-    Console.WriteLine(message);
-}
-
-void SubtractionGame(string message)
-{
-    Console.WriteLine(message);
-}
-
-void AdditionGame(string message)
-{
-    Console.WriteLine(message);
+    Console.WriteLine("Please type your name");
+    var name = Console.ReadLine();
+    return name;
 }
 
 // aparently visual studio has a feature to auto generate a method from context. Refactoring?
-void Menu(string? name, DateTime date)
+void Menu(string name)
 {
     Console.WriteLine("--------------------------------------------");
     Console.WriteLine(
@@ -68,3 +52,25 @@ Q - Quit");
     }
         
 }
+
+void MultiplicationGame(string messaage)
+{
+    Console.WriteLine(messaage);
+}
+
+void DivisionGame(string message)
+{
+    Console.WriteLine(message);
+}
+
+void SubtractionGame(string message)
+{
+    Console.WriteLine(message);
+}
+
+void AdditionGame(string message)
+{
+    Console.WriteLine(message);
+}
+
+   
