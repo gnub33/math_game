@@ -1,16 +1,51 @@
 ﻿using System.ComponentModel.Design;
+using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices.ComTypes;
+
+/*
+ * Currently allows you to choose one mode, each 5 rounds, best 3/5
+ * future: eitherm manually switch modes or reprompt user to choose before each round
+ * implement play again feature
+ * save score between games
+ * 
+ */
+
 
 var date = DateTime.UtcNow;
 string name = GetName();
 int score = 0;
-Menu(name);
+
+bool playAgain = true;
+
 string GetName()
 {
     Console.WriteLine("Please type your name");
     var name = Console.ReadLine();
     return name;
 }
+
+do {
+    Menu(name);
+
+    Console.WriteLine("\n");
+
+    if (score >= 3) 
+    { Console.WriteLine("YOU WON!"); } 
+    else {
+        Console.WriteLine( "you lost..."); 
+    }
+
+    Console.WriteLine("Play again? Enter 'y' or 'n' ");
+    string response = Console.ReadLine().ToLower();
+
+    if (response == "n" || response == "no")
+    {
+        playAgain = false;
+    }
+    
+} 
+while (playAgain);
+
 
 
 // aparently visual studio has a feature to auto generate a method from context. Refactoring?
@@ -32,16 +67,16 @@ Q - Quit");
     switch (gameSelected.Trim().ToLower())
     {
         case "a":
-            AdditionGame("Addiction game selected");
+            AdditionGame("Addiction game");
             break;
         case "s":
-            SubtractionGame("Subtraction game selected");
+            SubtractionGame("Subtraction game");
             break;
         case "m":
-            MultiplicationGame("Multiplication game selected");
+            MultiplicationGame("Multiplication game");
             break;
         case "d":
-            DivisionGame("Division game selected");
+            DivisionGame("Division game");
             break;
         case "q":
             Console.WriteLine("Bye!");
@@ -51,55 +86,139 @@ Q - Quit");
             Console.WriteLine("You did not enter a valid option");
             Environment.Exit(1);
             break;
-
     }
         
 }
 
 void MultiplicationGame(string messaage)
 {
+    Console.Clear();
     Console.WriteLine(messaage);
+    
+    int[] operands = GetNumbers();
+    var answer = 0;
+    
+    string userAnswer = "";
+    
+    for (int i = 0; i < 5; i++)
+    {
+        answer = operands[0] * operands[1];
+    
+        Console.WriteLine($"{operands[0]} * {operands[1]} = ");
+        userAnswer = Console.ReadLine();
+        
+        if (answer.ToString() == userAnswer)
+        {
+            score++;
+            Console.WriteLine($"Correct! score: {score}\nPress any key to continue...");
+            Console.ReadLine();
+        }
+        else
+        {
+            Console.WriteLine("Incorrect. Press any key to continue...");
+            Console.ReadLine();
+        }
+        
+        operands = GetNumbers();
+        Console.WriteLine("\n");
+        Console.Clear();
+    }
 }
 
 void DivisionGame(string message)
 {
+    Console.Clear();
     Console.WriteLine(message);
     for (var i = 0; i < 5; i++)
     {
         var divisionNumbers = GetDivisionNumbers();
         int answer = divisionNumbers[0] / divisionNumbers[1];
+        
         Console.WriteLine($"{divisionNumbers[0]} / {divisionNumbers[1]} = ");
         var userAnswer = Console.ReadLine();
         
+        // if (int.Parse(result) == firstNumber / secondNumber)
         if (answer.ToString() == userAnswer)
         {
-            Console.WriteLine("Correct");
             score++;
-            Console.WriteLine($"score: {score}\n");
+            Console.WriteLine($"Correct! score: {score}\nPress any key to continue...");
+            Console.ReadLine();
         }
         else
         {
-            Console.WriteLine("Incorrect");
+            Console.WriteLine("Incorrect. Press any key to continue...");
+            Console.ReadLine();
         }
     }
-    
 }
-
-if (score >= 3) 
-{ Console.WriteLine("YOU WON!"); } 
-else {
-    Console.WriteLine( "you lost..."); 
-}
-;
 
 void SubtractionGame(string message)
 {
+    Console.Clear();
     Console.WriteLine(message);
+    
+    int[] operands = GetNumbers();
+    var answer = 0;
+    
+    string userAnswer = "";
+    
+    for (int i = 0; i < 5; i++)
+    {
+        answer = operands[0] - operands[1];
+    
+        Console.WriteLine($"{operands[0]} - {operands[1]} = ");
+        userAnswer = Console.ReadLine();
+        
+        if (answer.ToString() == userAnswer)
+        {
+            score++;
+            Console.WriteLine($"Correct! score: {score}\nPress any key to continue...");
+            Console.ReadLine();
+        }
+        else
+        {
+            Console.WriteLine("Incorrect. Press any key to continue...");
+            Console.ReadLine();
+        }
+        
+        operands = GetNumbers();
+        Console.WriteLine("\n");
+    }
 }
 
 void AdditionGame(string message)
 {
+    Console.Clear();
     Console.WriteLine(message);
+    
+    int[] operands = GetNumbers();
+    var answer = 0;
+    
+    string userAnswer = "";
+    
+    for (int i = 0; i < 5; i++)
+    {
+        
+        answer = operands[0] + operands[1];
+    
+        Console.WriteLine($"{operands[0]} + {operands[1]} = ");
+        userAnswer = Console.ReadLine();
+        
+        if (answer.ToString() == userAnswer)
+        {
+            score++;
+            Console.WriteLine($"Correct! score: {score}\nPress any key to continue...");
+            Console.ReadLine();
+        }
+        else
+        {
+            Console.WriteLine("Incorrect. Press any key to continue...");
+            Console.ReadLine();
+        }
+        
+        operands = GetNumbers();
+        Console.Clear();
+    }
 }
 
 int[] GetDivisionNumbers()
@@ -129,7 +248,19 @@ int[] GetDivisionNumbers()
 }
 
 //GetDivisionNumbers();
+int[] GetNumbers()
+{
+    var random = new Random();
+    var firstNumber = random.Next(1, 13);
+    var secondNumber = random.Next(1, 13);
+    
+    int[] numbers = new int[2];
+    numbers[0] = firstNumber;
+    numbers[1] = secondNumber;
 
+    return numbers;
+
+}
 
    
 // game: two random numbers are presented with an operation
@@ -137,3 +268,5 @@ int[] GetDivisionNumbers()
 // game loops a set number of times until deciding player win/loose - best 3/5
 // for division, only provide random numbers that result in integers
 // idea - keep generating numbers between 0-99 until result is an integer
+
+// c#academy version - no win/loose. just game over and print score.
