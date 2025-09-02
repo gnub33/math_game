@@ -11,6 +11,9 @@ using System.Runtime.InteropServices.ComTypes;
  * jetbrains equivalent to visual studio's auto method refactorf
  */
 
+// organize and refactor
+// classes for menu, helpers and game functions
+// internal keyword, fields and static method
 
 var date = DateTime.UtcNow;
 
