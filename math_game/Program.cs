@@ -3,11 +3,12 @@ using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices.ComTypes;
 
 /*
- * Currently allows you to choose one mode, each 5 rounds, best 3/5
- * future: eitherm manually switch modes or reprompt user to choose before each round
- * implement play again feature
- * save score between games
- * 
+ * Currently 4 modes loop 5 times. Best 3/5 win conidition.
+ * play again as long as user does not enter n or no. any other input restarts game
+ * last implementation: storing from each game in list.
+ * user cannot view previous game scores (no leaderboard)
+ * no input validation
+ * jetbrains equivalent to visual studio's auto method refactorf
  */
 
 
