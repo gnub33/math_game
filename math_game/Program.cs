@@ -12,6 +12,12 @@ using System.Runtime.InteropServices.ComTypes;
 
 
 var date = DateTime.UtcNow;
+
+//var games = new List <string>();
+// global scope variable, dynamic
+List<string> games = new List<string>();
+
+
 string name = GetName();
 int score = 0;
 
@@ -45,7 +51,6 @@ do {
     
 } 
 while (playAgain);
-
 
 
 // aparently visual studio has a feature to auto generate a method from context. Refactoring?
@@ -123,19 +128,26 @@ void MultiplicationGame(string messaage)
         Console.WriteLine("\n");
         Console.Clear();
     }
+    
+    // add game score to list
+    games.Add($"{DateTime.Now} - Multiplication: Score={score}");
 }
 
 void DivisionGame(string message)
 {
     Console.Clear();
     Console.WriteLine(message);
+    
+    var divisionNumbers = GetDivisionNumbers();
+    int answer = divisionNumbers[0] / divisionNumbers[1];
+    
+    var userAnswer = Console.ReadLine();
+    
     for (var i = 0; i < 5; i++)
     {
-        var divisionNumbers = GetDivisionNumbers();
-        int answer = divisionNumbers[0] / divisionNumbers[1];
         
         Console.WriteLine($"{divisionNumbers[0]} / {divisionNumbers[1]} = ");
-        var userAnswer = Console.ReadLine();
+        userAnswer = Console.ReadLine();
         
         // if (int.Parse(result) == firstNumber / secondNumber)
         if (answer.ToString() == userAnswer)
@@ -149,7 +161,15 @@ void DivisionGame(string message)
             Console.WriteLine("Incorrect. Press any key to continue...");
             Console.ReadLine();
         }
+        
+        //get new values
+        divisionNumbers = GetDivisionNumbers();
+        answer = divisionNumbers[0] / divisionNumbers[1];
+
+        
     }
+    
+    games.Add($"{DateTime.Now} - Division: Score={score}");
 }
 
 void SubtractionGame(string message)
@@ -184,6 +204,7 @@ void SubtractionGame(string message)
         operands = GetNumbers();
         Console.WriteLine("\n");
     }
+    games.Add($"{DateTime.Now} - Subtraction: Score={score}");
 }
 
 void AdditionGame(string message)
@@ -219,6 +240,7 @@ void AdditionGame(string message)
         operands = GetNumbers();
         Console.Clear();
     }
+    games.Add($"{DateTime.Now} - Addition: Score={score}");
 }
 
 int[] GetDivisionNumbers()
